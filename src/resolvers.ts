@@ -1,11 +1,11 @@
-import { context } from "./context";
-import { GraphQLScalarType, Kind } from "graphql";
+import { context } from './context';
+import { GraphQLScalarType, Kind } from 'graphql';
 
 // custom date scalar because date type doesn't exists in graphql
 // github issue: https://github.com/graphql/graphql-spec/issues/73
 const dateScalar = new GraphQLScalarType({
-  name: "Date",
-  description: "Date custom scalar type",
+  name: 'Date',
+  description: 'Date custom scalar type',
   serialize(value) {
     return value.getTime();
   },
@@ -27,16 +27,14 @@ export const resolvers = {
   },
   Mutation: {
     addPost: async (
-      parent,
-      args,
-      ctx,
-      info
+      _: any,
+      { title, content }: { title: string; content?: string }
     ): Promise<{ success: boolean; message?: string }> => {
       try {
         await context.prisma.post.create({
-          data: { title: args.title, content: args.content },
+          data: { title: title, content: content },
         });
-        return { success: true, message: "Post added." };
+        return { success: true, message: 'Post added.' };
       } catch (err) {
         return { success: false, message: err };
       }
