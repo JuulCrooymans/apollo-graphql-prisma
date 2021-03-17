@@ -1,4 +1,4 @@
-import { gql } from "apollo-server";
+import { gql } from 'apollo-server-express';
 
 export const typeDefs = gql`
   scalar Date
@@ -15,10 +15,10 @@ export const typeDefs = gql`
   }
 
   type Query {
-    posts: [Post]
+    posts: [Post!]
   }
 
   type Mutation {
-    addPost(title: String, content: String!): PostResponse!
+    addPost(title: String!, content: String): PostResponse!
   }
 `;

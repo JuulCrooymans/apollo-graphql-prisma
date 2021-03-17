@@ -1,5 +1,6 @@
 import { context } from './context';
 import { GraphQLScalarType, Kind } from 'graphql';
+import { Resolvers, Scalars } from './generated/graphql';
 
 // custom date scalar because date type doesn't exists in graphql
 // github issue: https://github.com/graphql/graphql-spec/issues/73
@@ -20,19 +21,17 @@ const dateScalar = new GraphQLScalarType({
   },
 });
 
-export const resolvers = {
+export const resolvers: Resolvers = {
   Date: dateScalar,
   Query: {
     posts: () => context.prisma.post.findMany(),
   },
   Mutation: {
-    addPost: async (
-      _: any,
-      { title, content }: { title: string; content?: string }
-    ): Promise<{ success: boolean; message?: string }> => {
+    // TODO: research mutation parameters
+    addPost: async (root, args, ctx) => {
       try {
         await context.prisma.post.create({
-          data: { title: title, content: content },
+          data: { title: args.title, content: args.content },
         });
         return { success: true, message: 'Post added.' };
       } catch (err) {
