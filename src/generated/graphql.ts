@@ -13,11 +13,14 @@ export type Scalars = {
   Float: number;
   /** Date custom scalar type */
   Date: any;
-  /** The `Upload` scalar type represents a file upload. */
-  Upload: any;
 };
 
 
+export type Error = {
+  __typename?: 'Error';
+  success?: Maybe<Scalars['Boolean']>;
+  message?: Maybe<Scalars['String']>;
+};
 
 export type Post = {
   __typename?: 'Post';
@@ -25,6 +28,15 @@ export type Post = {
   title: Scalars['String'];
   content?: Maybe<Scalars['String']>;
   createdAt: Scalars['Date'];
+};
+
+export type User = {
+  __typename?: 'User';
+  userId: Scalars['Int'];
+  email?: Maybe<Scalars['String']>;
+  username?: Maybe<Scalars['String']>;
+  password?: Maybe<Scalars['String']>;
+  createdAt?: Maybe<Scalars['Date']>;
 };
 
 export type PostResponse = {
@@ -36,6 +48,12 @@ export type PostResponse = {
 export type Query = {
   __typename?: 'Query';
   posts?: Maybe<Array<Post>>;
+  user?: Maybe<User>;
+};
+
+
+export type QueryUserArgs = {
+  email: Scalars['String'];
 };
 
 export type Mutation = {
@@ -48,12 +66,6 @@ export type MutationAddPostArgs = {
   title: Scalars['String'];
   content?: Maybe<Scalars['String']>;
 };
-
-export enum CacheControlScope {
-  Public = 'PUBLIC',
-  Private = 'PRIVATE'
-}
-
 
 
 
@@ -134,44 +146,55 @@ export type DirectiveResolverFn<TResult = {}, TParent = {}, TContext = {}, TArgs
 /** Mapping between all available schema types and the resolvers types */
 export type ResolversTypes = {
   Date: ResolverTypeWrapper<Scalars['Date']>;
+  Error: ResolverTypeWrapper<Error>;
+  Boolean: ResolverTypeWrapper<Scalars['Boolean']>;
+  String: ResolverTypeWrapper<Scalars['String']>;
   Post: ResolverTypeWrapper<Post>;
   Int: ResolverTypeWrapper<Scalars['Int']>;
-  String: ResolverTypeWrapper<Scalars['String']>;
+  User: ResolverTypeWrapper<User>;
   PostResponse: ResolverTypeWrapper<PostResponse>;
-  Boolean: ResolverTypeWrapper<Scalars['Boolean']>;
   Query: ResolverTypeWrapper<{}>;
   Mutation: ResolverTypeWrapper<{}>;
-  CacheControlScope: CacheControlScope;
-  Upload: ResolverTypeWrapper<Scalars['Upload']>;
 };
 
 /** Mapping between all available schema types and the resolvers parents */
 export type ResolversParentTypes = {
   Date: Scalars['Date'];
+  Error: Error;
+  Boolean: Scalars['Boolean'];
+  String: Scalars['String'];
   Post: Post;
   Int: Scalars['Int'];
-  String: Scalars['String'];
+  User: User;
   PostResponse: PostResponse;
-  Boolean: Scalars['Boolean'];
   Query: {};
   Mutation: {};
-  Upload: Scalars['Upload'];
 };
-
-export type CacheControlDirectiveArgs = {   maxAge?: Maybe<Scalars['Int']>;
-  scope?: Maybe<CacheControlScope>; };
-
-export type CacheControlDirectiveResolver<Result, Parent, ContextType = any, Args = CacheControlDirectiveArgs> = DirectiveResolverFn<Result, Parent, ContextType, Args>;
 
 export interface DateScalarConfig extends GraphQLScalarTypeConfig<ResolversTypes['Date'], any> {
   name: 'Date';
 }
+
+export type ErrorResolvers<ContextType = any, ParentType extends ResolversParentTypes['Error'] = ResolversParentTypes['Error']> = {
+  success?: Resolver<Maybe<ResolversTypes['Boolean']>, ParentType, ContextType>;
+  message?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
+  __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
+};
 
 export type PostResolvers<ContextType = any, ParentType extends ResolversParentTypes['Post'] = ResolversParentTypes['Post']> = {
   id?: Resolver<ResolversTypes['Int'], ParentType, ContextType>;
   title?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
   content?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
   createdAt?: Resolver<ResolversTypes['Date'], ParentType, ContextType>;
+  __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
+};
+
+export type UserResolvers<ContextType = any, ParentType extends ResolversParentTypes['User'] = ResolversParentTypes['User']> = {
+  userId?: Resolver<ResolversTypes['Int'], ParentType, ContextType>;
+  email?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
+  username?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
+  password?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
+  createdAt?: Resolver<Maybe<ResolversTypes['Date']>, ParentType, ContextType>;
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
 };
 
@@ -183,23 +206,21 @@ export type PostResponseResolvers<ContextType = any, ParentType extends Resolver
 
 export type QueryResolvers<ContextType = any, ParentType extends ResolversParentTypes['Query'] = ResolversParentTypes['Query']> = {
   posts?: Resolver<Maybe<Array<ResolversTypes['Post']>>, ParentType, ContextType>;
+  user?: Resolver<Maybe<ResolversTypes['User']>, ParentType, ContextType, RequireFields<QueryUserArgs, 'email'>>;
 };
 
 export type MutationResolvers<ContextType = any, ParentType extends ResolversParentTypes['Mutation'] = ResolversParentTypes['Mutation']> = {
   addPost?: Resolver<ResolversTypes['PostResponse'], ParentType, ContextType, RequireFields<MutationAddPostArgs, 'title'>>;
 };
 
-export interface UploadScalarConfig extends GraphQLScalarTypeConfig<ResolversTypes['Upload'], any> {
-  name: 'Upload';
-}
-
 export type Resolvers<ContextType = any> = {
   Date?: GraphQLScalarType;
+  Error?: ErrorResolvers<ContextType>;
   Post?: PostResolvers<ContextType>;
+  User?: UserResolvers<ContextType>;
   PostResponse?: PostResponseResolvers<ContextType>;
   Query?: QueryResolvers<ContextType>;
   Mutation?: MutationResolvers<ContextType>;
-  Upload?: GraphQLScalarType;
 };
 
 
@@ -208,13 +229,3 @@ export type Resolvers<ContextType = any> = {
  * Use "Resolvers" root object instead. If you wish to get "IResolvers", add "typesPrefix: I" to your config.
  */
 export type IResolvers<ContextType = any> = Resolvers<ContextType>;
-export type DirectiveResolvers<ContextType = any> = {
-  cacheControl?: CacheControlDirectiveResolver<any, any, ContextType>;
-};
-
-
-/**
- * @deprecated
- * Use "DirectiveResolvers" root object instead. If you wish to get "IDirectiveResolvers", add "typesPrefix: I" to your config.
- */
-export type IDirectiveResolvers<ContextType = any> = DirectiveResolvers<ContextType>;

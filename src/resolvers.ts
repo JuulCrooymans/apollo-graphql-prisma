@@ -1,6 +1,6 @@
 import { context } from './context';
 import { GraphQLScalarType, Kind } from 'graphql';
-import { Resolvers, Scalars } from './generated/graphql';
+import { Resolvers } from './generated/graphql';
 
 // custom date scalar because date type doesn't exists in graphql
 // github issue: https://github.com/graphql/graphql-spec/issues/73
@@ -25,6 +25,13 @@ export const resolvers: Resolvers = {
   Date: dateScalar,
   Query: {
     posts: () => context.prisma.post.findMany(),
+    user: (_, { email }) => {
+      return context.prisma.user.findUnique({
+        where: {
+          email: email,
+        },
+      });
+    },
   },
   Mutation: {
     // TODO: research mutation parameters
