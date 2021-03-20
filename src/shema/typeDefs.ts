@@ -19,13 +19,7 @@ export const typeDefs = gql`
     userId: Int!
     email: String
     username: String
-    password: String
     createdAt: Date
-  }
-
-  type PostResponse {
-    success: Boolean
-    message: String!
   }
 
   type Query {
@@ -34,6 +28,8 @@ export const typeDefs = gql`
   }
 
   type Mutation {
-    addPost(title: String!, content: String): PostResponse!
+    addPost(title: String!, content: String): Post
+    signup(email: String!, username: String!, password: String!): User
+    login(email: String!, password: String!): User
   }
 `;

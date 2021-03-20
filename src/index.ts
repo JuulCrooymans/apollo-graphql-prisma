@@ -1,17 +1,15 @@
 import * as express from 'express';
-import { makeExecutableSchema, ApolloServer } from 'apollo-server-express';
-import { typeDefs } from './schema';
-import { resolvers } from './resolvers';
+import { ApolloServer } from 'apollo-server-express';
+import { context } from './utils';
+import { schema } from './shema';
 
-const schema = makeExecutableSchema({
-  typeDefs,
-  resolvers,
-  resolverValidationOptions: {
-    requireResolversForResolveType: false, // remove prisma warning: https://github.com/prisma/prisma1/issues/2225
-  },
+const server = new ApolloServer({
+  schema,
+  context: (req: any) => ({
+    ...req,
+    prisma: context.prisma,
+  }),
 });
-
-const server = new ApolloServer({ schema });
 const app = express();
 const port = 4000;
 
