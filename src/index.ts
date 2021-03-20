@@ -1,7 +1,7 @@
 import * as express from 'express';
 import { ApolloServer } from 'apollo-server-express';
 import { context } from './utils';
-import { schema } from './shema';
+import { schema } from './schema';
 
 const server = new ApolloServer({
   schema,
