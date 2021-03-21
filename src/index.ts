@@ -5,7 +5,7 @@ import { schema } from './schema';
 
 const server = new ApolloServer({
   schema,
-  context: (req: any) => ({
+  context: (req) => ({
     ...req,
     prisma: context.prisma,
   }),
