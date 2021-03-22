@@ -16,3 +16,7 @@ For development:
 ```
 yarn generate:watch
 ```
+
+## TODO
+- [ ] Add watch to graphql codegen
+- [ ] add sessions middleware and table 

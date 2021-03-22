@@ -1,11 +1,38 @@
 import * as express from 'express';
-import { ApolloServer } from 'apollo-server-express';
-import { typeDefs } from './schema';
-import { resolvers } from './resolvers';
+import * as session from 'express-session';
+import { ApolloServer, AuthenticationError } from 'apollo-server-express';
+import { context } from './utils';
+import { schema } from './schema';
 
-const server = new ApolloServer({ typeDefs, resolvers });
 const app = express();
 const port = 4000;
+
+// TODO: add session
+// app.use(
+//   session({
+//     secret: 'secret-key', // TODO: change to secure key
+//     resave: false,
+//     saveUninitialized: false,
+//     cookie: {
+//       maxAge: 1000 * 60 * 60 * 24, // TODO: research best maxAge for cookie
+//       sameSite: true,
+//       secure: process.env.NODE_ENV === 'production',
+//     },
+//   })
+// );
+
+const server = new ApolloServer({
+  schema,
+  context: (req) => {
+    // Check user session
+    // throw new AuthenticationError('Not authenticated.');
+
+    return {
+      ...req,
+      prisma: context.prisma,
+    };
+  },
+});
 
 server.applyMiddleware({ app });
 
