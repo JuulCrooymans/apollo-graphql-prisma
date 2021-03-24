@@ -10,8 +10,6 @@ yarn start
 
 ## Generate graphql types
 
-Server needs to be running at http://localhost:4000/:
-
 ```
 yarn generate
 ```
