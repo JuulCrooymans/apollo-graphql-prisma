@@ -25,8 +25,8 @@ const dateScalar = new GraphQLScalarType({
 export const resolvers: Resolvers = {
   Date: dateScalar,
   Query: {
-    posts: (parent, args, ctx) => ctx.prisma.post.findMany(),
-    user: (parent, { email }, ctx) => {
+    posts: (_, __, ctx) => ctx.prisma.post.findMany(),
+    user: (_, { email }, ctx) => {
       return ctx.prisma.user.findUnique({
         where: {
           email: email,
@@ -36,7 +36,7 @@ export const resolvers: Resolvers = {
   },
   Mutation: {
     // prisma error codes: https://www.prisma.io/docs/reference/api-reference/error-reference
-    addPost: async (parent, { title, content }, ctx) => {
+    addPost: async (_, { title, content }, ctx) => {
       try {
         return await ctx.prisma.post.create({
           data: { title: title, content: content },
@@ -45,7 +45,7 @@ export const resolvers: Resolvers = {
         throw new ApolloError(err.message, err.code);
       }
     },
-    signup: async (parent, { email, username, password }, ctx) => {
+    signup: async (_, { email, username, password }, ctx) => {
       try {
         if (password.length < 6) throw new ApolloError('Password to short.');
 
@@ -58,7 +58,7 @@ export const resolvers: Resolvers = {
         throw new ApolloError(err.message, err.code);
       }
     },
-    login: async (parent, { email, password }, ctx) => {
+    login: async (_, { email, password }, ctx) => {
       const user = await ctx.prisma.user.findUnique({
         where: {
           email: email,
