@@ -25,3 +25,5 @@ yarn generate:watch
 - [x] Add watch to graphql codegen
 - [ ] add sessions middleware and table
 - [ ] Implement merge for graphql schemas
+- [ ] Setup Nginx reverse proxy in docker-compose.yml
+- [ ] Deploy strategy

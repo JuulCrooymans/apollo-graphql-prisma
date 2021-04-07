@@ -21,25 +21,16 @@ export type Error = {
   message?: Maybe<Scalars['String']>;
 };
 
-export type Post = {
-  __typename?: 'Post';
-  id: Scalars['Int'];
-  title: Scalars['String'];
-  content?: Maybe<Scalars['String']>;
-  createdAt: Scalars['Date'];
-};
-
 export type User = {
   __typename?: 'User';
-  userId: Scalars['Int'];
-  email?: Maybe<Scalars['String']>;
+  id: Scalars['Int'];
+  email: Scalars['String'];
   username?: Maybe<Scalars['String']>;
   createdAt?: Maybe<Scalars['Date']>;
 };
 
 export type Query = {
   __typename?: 'Query';
-  posts?: Maybe<Array<Post>>;
   user?: Maybe<User>;
 };
 
@@ -50,15 +41,8 @@ export type QueryUserArgs = {
 
 export type Mutation = {
   __typename?: 'Mutation';
-  addPost?: Maybe<Post>;
   signup?: Maybe<User>;
   login?: Maybe<User>;
-};
-
-
-export type MutationAddPostArgs = {
-  title: Scalars['String'];
-  content?: Maybe<Scalars['String']>;
 };
 
 
@@ -156,9 +140,8 @@ export type ResolversTypes = {
   Error: ResolverTypeWrapper<Error>;
   Boolean: ResolverTypeWrapper<Scalars['Boolean']>;
   String: ResolverTypeWrapper<Scalars['String']>;
-  Post: ResolverTypeWrapper<Post>;
-  Int: ResolverTypeWrapper<Scalars['Int']>;
   User: ResolverTypeWrapper<User>;
+  Int: ResolverTypeWrapper<Scalars['Int']>;
   Query: ResolverTypeWrapper<{}>;
   Mutation: ResolverTypeWrapper<{}>;
 };
@@ -169,9 +152,8 @@ export type ResolversParentTypes = {
   Error: Error;
   Boolean: Scalars['Boolean'];
   String: Scalars['String'];
-  Post: Post;
-  Int: Scalars['Int'];
   User: User;
+  Int: Scalars['Int'];
   Query: {};
   Mutation: {};
 };
@@ -186,29 +168,19 @@ export type ErrorResolvers<ContextType = any, ParentType extends ResolversParent
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
 };
 
-export type PostResolvers<ContextType = any, ParentType extends ResolversParentTypes['Post'] = ResolversParentTypes['Post']> = {
-  id?: Resolver<ResolversTypes['Int'], ParentType, ContextType>;
-  title?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
-  content?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
-  createdAt?: Resolver<ResolversTypes['Date'], ParentType, ContextType>;
-  __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
-};
-
 export type UserResolvers<ContextType = any, ParentType extends ResolversParentTypes['User'] = ResolversParentTypes['User']> = {
-  userId?: Resolver<ResolversTypes['Int'], ParentType, ContextType>;
-  email?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
+  id?: Resolver<ResolversTypes['Int'], ParentType, ContextType>;
+  email?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
   username?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
   createdAt?: Resolver<Maybe<ResolversTypes['Date']>, ParentType, ContextType>;
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
 };
 
 export type QueryResolvers<ContextType = any, ParentType extends ResolversParentTypes['Query'] = ResolversParentTypes['Query']> = {
-  posts?: Resolver<Maybe<Array<ResolversTypes['Post']>>, ParentType, ContextType>;
   user?: Resolver<Maybe<ResolversTypes['User']>, ParentType, ContextType, RequireFields<QueryUserArgs, 'email'>>;
 };
 
 export type MutationResolvers<ContextType = any, ParentType extends ResolversParentTypes['Mutation'] = ResolversParentTypes['Mutation']> = {
-  addPost?: Resolver<Maybe<ResolversTypes['Post']>, ParentType, ContextType, RequireFields<MutationAddPostArgs, 'title'>>;
   signup?: Resolver<Maybe<ResolversTypes['User']>, ParentType, ContextType, RequireFields<MutationSignupArgs, 'email' | 'username' | 'password'>>;
   login?: Resolver<Maybe<ResolversTypes['User']>, ParentType, ContextType, RequireFields<MutationLoginArgs, 'email' | 'password'>>;
 };
@@ -216,7 +188,6 @@ export type MutationResolvers<ContextType = any, ParentType extends ResolversPar
 export type Resolvers<ContextType = any> = {
   Date?: GraphQLScalarType;
   Error?: ErrorResolvers<ContextType>;
-  Post?: PostResolvers<ContextType>;
   User?: UserResolvers<ContextType>;
   Query?: QueryResolvers<ContextType>;
   Mutation?: MutationResolvers<ContextType>;
