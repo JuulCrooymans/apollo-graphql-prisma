@@ -7,7 +7,8 @@
     "start": "cross-env NODE_ENV=development nodemon src/index.ts",
     "build": "rm -rf dist && tsc --project ./",
     "generate": "graphql-codegen --config codegen.yml",
-    "generate:watch": "graphql-codegen -w --config codegen.yml"
+    "generate:watch": "graphql-codegen -w --config codegen.yml",
+    "migrate": "yarn prisma migrate dev --preview-feature"
   },
   "devDependencies": {
     "@graphql-codegen/cli": "1.21.3",
@@ -16,6 +17,8 @@
     "@types/bcrypt": "^3.0.0",
     "@types/express-session": "^1.17.3",
     "@types/node": "^14.14.34",
+    "@types/passport": "^1.0.6",
+    "@types/passport-local": "^1.0.33",
     "cross-env": "^7.0.3",
     "nodemon": "^2.0.7",
     "prettier": "^2.2.1",
@@ -28,6 +31,8 @@
     "apollo-server-express": "^2.21.1",
     "bcrypt": "^5.0.1",
     "express-session": "^1.17.1",
-    "graphql": "^15.5.0"
+    "graphql": "^15.5.0",
+    "passport": "^0.4.1",
+    "passport-local": "^1.0.0"
   }
 }
