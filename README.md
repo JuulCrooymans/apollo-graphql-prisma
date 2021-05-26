@@ -4,8 +4,6 @@
 
 Run postgresql
 
-_Stop other Postgresql services or change port to '35432:5432' in docker-compose.yml_
-
 ```
 docker-compose up
 ```
