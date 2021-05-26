@@ -1,6 +1,6 @@
 import { GraphQLScalarType, Kind } from 'graphql';
 import { Resolvers } from '../types/graphql';
-import { ApolloError, AuthenticationError } from 'apollo-server-express';
+import { ApolloError } from 'apollo-server-express';
 import * as bcrypt from 'bcrypt';
 
 // custom date scalar because date type doesn't exists in graphql
@@ -25,7 +25,6 @@ const dateScalar = new GraphQLScalarType({
 export const resolvers: Resolvers = {
   Date: dateScalar,
   Query: {
-    posts: (_, __, ctx) => ctx.prisma.post.findMany(),
     user: (_, { email }, ctx) => {
       return ctx.prisma.user.findUnique({
         where: {
@@ -36,15 +35,6 @@ export const resolvers: Resolvers = {
   },
   Mutation: {
     // prisma error codes: https://www.prisma.io/docs/reference/api-reference/error-reference
-    addPost: async (_, { title, content }, ctx) => {
-      try {
-        return await ctx.prisma.post.create({
-          data: { title: title, content: content },
-        });
-      } catch (err) {
-        throw new ApolloError(err.message, err.code);
-      }
-    },
     signup: async (_, { email, username, password }, ctx) => {
       try {
         if (password.length < 6) throw new ApolloError('Password to short.');
@@ -69,7 +59,7 @@ export const resolvers: Resolvers = {
 
       const isValid = await bcrypt.compare(password, user.password);
 
-      if (!isValid) throw new AuthenticationError('Wrong password.');
+      if (!isValid) throw new ApolloError('Wrong password.');
 
       return user;
     },

@@ -7,15 +7,8 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
-model Post {
-  id        Int      @id @default(autoincrement())
-  title     String   @db.VarChar(255)
-  content   String?
-  createdAt DateTime @default(now()) @db.Timestamp(6)
-}
-
 model User {
-  userId    Int      @id @default(autoincrement())
+  id        String   @id @default(cuid())
   email     String   @unique
   username  String
   password  String
