@@ -8,7 +8,7 @@
     "build": "rm -rf dist && tsc --project ./",
     "generate": "graphql-codegen --config codegen.yml",
     "generate:watch": "graphql-codegen -w --config codegen.yml",
-    "migrate": "yarn prisma migrate dev --preview-feature"
+    "prisma:migrate": "yarn prisma migrate dev --preview-feature"
   },
   "devDependencies": {
     "@graphql-codegen/cli": "1.21.3",
