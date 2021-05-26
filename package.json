@@ -4,7 +4,7 @@
   "main": "index.js",
   "license": "MIT",
   "scripts": {
-    "start": "cross-env NODE_ENV=development nodemon src/index.ts",
+    "start": "cross-env NODE_ENV=development nodemon src/server/index.ts",
     "build": "rm -rf dist && tsc --project ./",
     "generate": "graphql-codegen --config codegen.yml",
     "generate:watch": "graphql-codegen -w --config codegen.yml",
@@ -34,5 +34,8 @@
     "graphql": "^15.5.0",
     "passport": "^0.4.1",
     "passport-local": "^1.0.0"
+  },
+  "prisma": {
+    "schema": "src/server/prisma/schema.prisma"
   }
 }

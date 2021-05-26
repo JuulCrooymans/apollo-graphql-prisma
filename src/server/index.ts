@@ -1,7 +1,7 @@
 import * as express from 'express';
 import * as session from 'express-session';
 import { ApolloServer, AuthenticationError } from 'apollo-server-express';
-import { context } from './utils';
+import { context } from './prisma/prisma';
 import { schema } from './schema';
 
 const app = express();
