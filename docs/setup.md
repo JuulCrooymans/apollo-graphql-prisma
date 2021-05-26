@@ -11,3 +11,9 @@ Run migration
 ```
 yarn prisma:migrate
 ```
+
+Run database seed
+
+```
+yarn prisma:seed
+```
