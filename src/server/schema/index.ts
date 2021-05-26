@@ -1,9 +1,9 @@
-import { readFileSync } from 'fs';
-import { makeExecutableSchema, gql } from 'apollo-server-express';
-import { resolvers } from './resolvers';
+import { readFileSync } from "fs";
+import { makeExecutableSchema, gql } from "apollo-server-express";
+import { resolvers } from "./resolvers";
 
 const typeDefs = gql(
-  readFileSync(__dirname.concat('/typeDefs.graphql'), 'utf8')
+  readFileSync(__dirname.concat("/typeDefs.graphql"), "utf8")
 );
 
 export const schema = makeExecutableSchema({
