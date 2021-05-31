@@ -1,4 +1,4 @@
-import { context } from "./prisma";
+import { prisma } from "./prisma";
 import { Prisma } from "@prisma/client";
 
 // Empty database before seeding
@@ -6,14 +6,14 @@ async function emptyDatabase() {
   const tables = Prisma.dmmf.datamodel.models.map((model) => model.name);
 
   await Promise.all(
-    tables.map((table) => context.prisma.$executeRaw(`DELETE FROM "${table}";`))
+    tables.map((table) => prisma.$executeRaw(`DELETE FROM "${table}";`))
   );
 }
 
 async function main() {
   await emptyDatabase();
   await Promise.all([
-    await context.prisma.user.create({
+    await prisma.user.create({
       data: {
         id: "user",
         email: "test@mail.com",
@@ -30,5 +30,5 @@ main()
     process.exit(1);
   })
   .finally(async () => {
-    await context.prisma.$disconnect();
+    await prisma.$disconnect();
   });

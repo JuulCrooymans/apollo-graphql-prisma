@@ -1,6 +1,6 @@
 import { GraphQLScalarType, Kind } from "graphql";
-import { Resolvers } from "../types/graphql";
-import { ApolloError } from "apollo-server-express";
+import { Resolvers } from "../../types/graphql.generated";
+import { ApolloError } from "apollo-server-micro";
 import * as bcrypt from "bcrypt";
 
 // custom date scalar because date type doesn't exists in graphql
