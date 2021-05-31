@@ -1,4 +1,4 @@
-# Apollo-graphql-prisma
+# Starter
 
 ## How to run?
 
@@ -8,10 +8,10 @@ Run postgresql
 docker-compose up
 ```
 
-Start server on http://localhost:4000/:
+Start next on http://localhost:3000/:
 
 ```
-yarn start
+yarn dev
 ```
 
 ## Generate graphql types
