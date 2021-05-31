@@ -1,4 +1,4 @@
-# Apollo-graphql-prisma
+# Starter
 
 ## How to run?
 
@@ -8,10 +8,10 @@ Run postgresql
 docker-compose up
 ```
 
-Start server on http://localhost:4000/:
+Start next on http://localhost:3000/:
 
 ```
-yarn start
+yarn dev
 ```
 
 ## Generate graphql types
@@ -25,12 +25,3 @@ For development:
 ```
 yarn generate:watch
 ```
-
-## TODO
-
-- [x] Add watch to graphql codegen.
-- [ ] add sessions middleware and table.
-- [ ] Implement merge for graphql schemas.
-- [ ] Setup Nginx reverse proxy in docker-compose.yml (with local https).
-- [ ] Add seed data.
-- [ ] Setup jest.

@@ -17,3 +17,8 @@ Run database seed
 ```
 yarn prisma:seed
 ```
+
+Generate Graphql types
+```
+yarn generate
+```
