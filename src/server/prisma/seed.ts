@@ -1,5 +1,6 @@
 import { prisma } from "./prisma";
 import { Prisma } from "@prisma/client";
+import bcrypt from "bcrypt";
 
 // Empty database before seeding
 async function emptyDatabase() {
@@ -18,7 +19,7 @@ async function main() {
         id: "user",
         email: "test@mail.com",
         username: "tester",
-        password: "123123",
+        password: await bcrypt.hash("123123", 10),
       },
     }),
   ]);
