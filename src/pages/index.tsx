@@ -1,7 +1,15 @@
+import Link from "next/link";
+
 function Home() {
   return (
     <div>
-      <h1>Dit is de homepage</h1>
+      <h1>Home</h1>
+      <Link href="/login">
+        <a>Login</a>
+      </Link>
+      <Link href="/sign-up">
+        <a>Sign up</a>
+      </Link>
     </div>
   );
 }
